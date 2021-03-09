@@ -1,6 +1,13 @@
-import 'file:///F:/Flutter/ApiDio/call_api_dio/lib/page/albums_page.dart';
+import 'package:call_api_dio/page/task_page.dart';
 import 'package:call_api_dio/page/users_page/user_page.dart';
 import 'package:flutter/material.dart';
+
+import 'page/albums_page.dart';
+
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+//Create context for app use
+
 
 void main() {
   runApp(MyApp());
@@ -11,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -52,6 +60,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   }));
                 },
                 child: Text('Call Api Stream RxDart')),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                    return TaskPage();
+                  }));
+                },
+                child: Text('Call Api Retrofit')),
           ],
         ),
       ),

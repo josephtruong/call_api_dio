@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 
 class LoggingInterceptor extends Interceptor{
 
@@ -29,7 +30,17 @@ class LoggingInterceptor extends Interceptor{
             i * _maxCharactersPerLine, endingIndex));
       }
     } else {
-      print(response.data);
+      var logger = Logger(
+        printer: PrettyPrinter(
+            methodCount: 2, // number of method calls to be displayed
+            errorMethodCount: 8, // number of method calls if stacktrace is provided
+            lineLength: 120, // width of the output
+            colors: true, // Colorful log messages
+            printEmojis: true, // Print an emoji for each log message
+            // printTime: true // Should each log print contain a timestamp6♠
+        )
+      );
+      logger.d('Response Data', response.data);
     }
     print("<-- END HTTP");
 
@@ -38,9 +49,8 @@ class LoggingInterceptor extends Interceptor{
 
   @override
   Future onError(DioError err) {
-    print("<-- Error -->");
-    print(err.error);
-    print(err.message);
+    var logger = Logger();
+    logger.e('Error', err.error);
     return super.onError(err);
   }
 
