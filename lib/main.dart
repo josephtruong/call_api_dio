@@ -1,13 +1,13 @@
+import 'package:call_api_dio/bloc/movie_bloc.dart';
+import 'package:call_api_dio/page/movie/movie_page.dart';
 import 'package:call_api_dio/page/task_page.dart';
 import 'package:call_api_dio/page/users_page/user_page.dart';
 import 'package:flutter/material.dart';
 
 import 'page/albums_page.dart';
 
-
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 //Create context for app use
-
 
 void main() {
   runApp(MyApp());
@@ -42,7 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Dio'),
       ),
       body: Container(
+        width: double.infinity,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
                 onPressed: () {
@@ -59,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return UserPage();
                   }));
                 },
-                child: Text('Call Api Stream RxDart')),
+                child: Text('Call Api Stream')),
             TextButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (ctx) {
@@ -67,6 +70,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   }));
                 },
                 child: Text('Call Api Retrofit')),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                    return MoviePage();
+                  }));
+                },
+                child: Text('Movie')),
           ],
         ),
       ),

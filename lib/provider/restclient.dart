@@ -1,7 +1,10 @@
+import 'package:call_api_dio/model/base/generic_collection.dart';
+import 'package:call_api_dio/model/movie_detail.dart';
 import 'package:call_api_dio/model/task.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:retrofit/http.dart';
+import '../model/movie.dart';
 
 part 'restclient.g.dart';
 
@@ -26,4 +29,11 @@ abstract class RestClient {
 
   @POST('/tasks')
   Future<Task> createTask(@Body() Task task);
+
+  @GET('popular?api_key=095a1beb261c7c8385ebb67348b42df7')
+  Future<GenericCollection<Movie>> getMovies();
+
+  @GET('{id}?api_key=095a1beb261c7c8385ebb67348b42df7')
+  Future<MovieDetail> getDetailMovie(@Path('id') String id);
+
 }

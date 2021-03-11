@@ -53,6 +53,15 @@ class _UserPageState extends State<UserPage> {
           IconButton(icon: Icon(Icons.search_outlined), onPressed: () {})
         ],
       ),
+      body: Container(),
+    );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Users'),
+        actions: [
+          IconButton(icon: Icon(Icons.search_outlined), onPressed: () {})
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () async{
           getUser(context);

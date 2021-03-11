@@ -1,19 +1,27 @@
-import 'file:///E:/Flutter/call_api_dio/lib/provider/base_api.dart';
 import 'package:call_api_dio/common/common.dart';
 import 'package:call_api_dio/model/list_task.dart';
 import 'package:call_api_dio/model/task.dart';
+import 'package:call_api_dio/provider/restclient.dart';
+import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
 
-class TaskBloc extends BaseApi {
+class TaskBloc{
   final _tasks = BehaviorSubject<ListTask>();
   final _task = BehaviorSubject<Task>();
 
   Stream<ListTask> get tasks => _tasks?.stream;
 
   Stream<Task> get task => _task?.stream;
+  RestClient restClient;
+
 
   TaskBloc() {
+    Dio dio = Dio();
+    dio.options = BaseOptions(contentType: "application/json",);
+
+    // dio.interceptors.add(LoggingInterceptor());
+    restClient = RestClient(dio);
      _getTask();
    // _getAll();
   }
@@ -27,7 +35,7 @@ class TaskBloc extends BaseApi {
       final task = await restClient.getTask();
       _tasks?.sink?.add(ListTask(tasks: task));
     } catch (obj) {
-      _tasks?.sink?.add(ListTask(error: handleError(obj)));
+     // _tasks?.sink?.add(ListTask(error: handleError(obj)));
     }
   }
 
@@ -43,7 +51,7 @@ class TaskBloc extends BaseApi {
       _task?.sink?.add(Task(
           name: result.name, avatar: result.avatar, createdAt: outputDate));
     } catch (error) {
-      _task?.sink?.add(Task.withError(handleError(error)));
+    //  _task?.sink?.add(Task.withError(handleError(error)));
     }
   }
 
@@ -51,7 +59,7 @@ class TaskBloc extends BaseApi {
     try {
       await restClient.deleteTask(id);
     } catch (err) {
-      Common.showMessage(message: handleError(err));
+     // Common.showMessage(message: handleError(err));
     }
   }
 
@@ -59,7 +67,7 @@ class TaskBloc extends BaseApi {
     try {
       await restClient.updateTask(id, Task(id: id, name: name));
     } catch (err) {
-      Common.showMessage(message: handleError(err));
+     // Common.showMessage(message: handleError(err));
     }
   }
 

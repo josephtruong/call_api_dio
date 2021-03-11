@@ -34,6 +34,7 @@ dependencies:
   retrofit: any
   logger: any
   intl: ^0.17.0
+  video_player: ^2.0.1
 
 dev_dependencies:
 

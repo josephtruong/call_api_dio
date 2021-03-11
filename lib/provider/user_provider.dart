@@ -1,22 +1,25 @@
+import 'package:call_api_dio/model/response.dart';
+import 'package:call_api_dio/model/user.dart';
 import 'package:call_api_dio/model/user_response.dart';
 import 'package:call_api_dio/provider/base_provider.dart';
 import 'package:dio/dio.dart';
 
 class UserApiProvider extends BaseApiProvider {
-
   UserApiProvider() {
     if (apiProvider == null) {
-       apiProvider = BaseApiProvider();
+      apiProvider = BaseApiProvider();
     }
   }
 
-  Future<UserResponse> getUsers({int page}) async {
+  Future<dynamic> getUsers({int page}) async {
     try {
       Response response = await dio.get(baseUrl + '?results=15&page=$page');
-      return UserResponse.fromJson(response.data);
+      print('============> 123 ${response.data['info']}');
+      return BaseResponseBody(
+          info: response.data['info'], results: response.data['results']);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
-      return UserResponse.withError(_handleError(error));
+      // return UserResponse.withError(_handleError(error));
     }
   }
 

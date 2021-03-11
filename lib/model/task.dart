@@ -11,6 +11,7 @@ class Task {
   String createdAt;
   String error;
 
+
   Task({this.id, this.name, this.avatar, this.createdAt,this.error });
 
   Task.withError(String value): error = value;

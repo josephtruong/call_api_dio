@@ -15,8 +15,9 @@ class UserBloc {
   }
 
   getUsers({int page}) async {
-    final users = await _userRepository.getUsers(page: page);
-    _users?.sink?.add(users);
+    await _userRepository.getUsers(page: page);
+    // final users = await _userRepository.getUsers(page: page);
+    // _users?.sink?.add(users);
   }
 
   Future<UserResponse> getUser() async {
