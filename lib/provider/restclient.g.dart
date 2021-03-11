@@ -24,10 +24,7 @@ class _RestClient implements RestClient {
     final _result = await _dio.request<List<dynamic>>('/tasks',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, baseUrl: baseUrl),
         data: _data);
     var value = _result.data
         .map((dynamic i) => Task.fromJson(i as Map<String, dynamic>))
@@ -123,6 +120,43 @@ class _RestClient implements RestClient {
             baseUrl: baseUrl),
         data: _data);
     final value = Task.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<GenericCollection<Movie>> getMovies() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'popular?api_key=095a1beb261c7c8385ebb67348b42df7',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = GenericCollection<Movie>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<MovieDetail> getDetailMovie(id) async {
+    ArgumentError.checkNotNull(id, 'id');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$id?api_key=095a1beb261c7c8385ebb67348b42df7',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MovieDetail.fromJson(_result.data);
     return value;
   }
 }

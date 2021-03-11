@@ -3,7 +3,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="call_api_dio"
-        android:icon="@mipmap/ic_launcher">
+       android:usesCleartextTraffic="true"
+       android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
