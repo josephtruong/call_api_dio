@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'page/albums_page.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
 //Create context for app use
 
 void main() {
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dio'),
+        title: const Text('Dio'),
       ),
       body: Container(
         width: double.infinity,
@@ -49,34 +49,34 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-                    return AlbumsPage(
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                    return const AlbumsPage(
                       type: TYPE.FEATURE,
                     );
                   }));
                 },
-                child: Text('Call Api Feature')),
+                child: const Text('Call Api Feature')),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
                     return UserPage();
                   }));
                 },
-                child: Text('Call Api Stream')),
+                child: const Text('Call Api Stream')),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
                     return TaskPage();
                   }));
                 },
-                child: Text('Call Api Retrofit')),
+                child: const Text('Call Api Retrofit')),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
                     return MoviePage();
                   }));
                 },
-                child: Text('Movie')),
+                child: const Text('Movie')),
           ],
         ),
       ),

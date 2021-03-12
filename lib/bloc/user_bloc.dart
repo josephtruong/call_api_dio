@@ -2,20 +2,21 @@ import 'package:call_api_dio/model/user_response.dart';
 import 'package:call_api_dio/repository/user_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-final userBloc = UserBloc();
+final UserBloc userBloc = UserBloc();
 
 class UserBloc {
-  final _users = BehaviorSubject<UserResponse>();
-
-  Stream<UserResponse> get users => _users?.stream;
-  UserRepository _userRepository;
 
   UserBloc() {
     _userRepository = UserRepository();
   }
 
-  getUsers({int page}) async {
-    await _userRepository.getUsers(page: page);
+  final BehaviorSubject<UserResponse> _users = BehaviorSubject<UserResponse>();
+
+  Stream<UserResponse> get users => _users?.stream;
+  UserRepository _userRepository;
+
+  Future<UserResponse> getUsers({int page}) async {
+    return await _userRepository.getUsers(page: page);
     // final users = await _userRepository.getUsers(page: page);
     // _users?.sink?.add(users);
   }
@@ -24,7 +25,7 @@ class UserBloc {
     return await _userRepository.getUsers();
   }
 
-  onDispose() {
+  Future<void> onDispose() {
     _users?.close();
   }
 }

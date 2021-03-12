@@ -21,17 +21,17 @@ class _TaskPageState extends State<TaskPage> {
     super.initState();
   }
 
-  getTask() async {
-    final dio = Dio();
-    final restClient = RestClient(dio);
+ Future<void> getTask() async {
+    final Dio dio = Dio();
+    final RestClient restClient = RestClient(dio);
     try {
       restClient.getTask();
     } catch (obj) {
       switch (obj.runtimeType) {
         case DioError:
           // Here's the sample to get the failed response error code and message
-          final res = (obj as DioError).response;
-          print("Got error : ${res.statusCode} -> ${res.statusMessage}");
+          final Response res = (obj as DioError).response;
+          print('Got error : ${res.statusCode} -> ${res.statusMessage}');
           break;
         default:
       }
@@ -42,11 +42,11 @@ class _TaskPageState extends State<TaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task'),
+        title: const Text('Task'),
       ),
       body: StreamBuilder<ListTask>(
         stream: _taskBloc.tasks,
-        builder: (ctx, snapshot) {
+        builder: (BuildContext ctx, AsyncSnapshot<ListTask> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error.isNotEmpty) {
               return Center(
@@ -55,14 +55,14 @@ class _TaskPageState extends State<TaskPage> {
             }
             return ListView.builder(
                 itemCount: snapshot.data.tasks.length,
-                itemBuilder: (ctx, index) {
-                  final task = snapshot.data.tasks[index];
+                itemBuilder: (BuildContext ctx, int index) {
+                  final Task task = snapshot.data.tasks[index];
                   return ListTile(
                     title: Text(task?.name),
                     subtitle:
                         Text(task.createdAt != null ? parseData(task.createdAt) : ''),
                     onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
                           return TaskDetailPage(taskBloc: _taskBloc, id: task.id,);
                         }));
                     },
@@ -73,7 +73,7 @@ class _TaskPageState extends State<TaskPage> {
                   );
                 });
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
@@ -120,41 +120,41 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   String _handleError(Exception error) {
-    String errorDescription = "";
+    String errorDescription = '';
     if (error is DioError) {
-      DioError dioError = error;
+      final DioError dioError = error;
       switch (dioError.type) {
         case DioErrorType.CANCEL:
-          errorDescription = "Request to API server was cancelled";
+          errorDescription = 'Request to API server was cancelled';
           break;
         case DioErrorType.CONNECT_TIMEOUT:
-          errorDescription = "Connection timeout with API server";
+          errorDescription = 'Connection timeout with API server';
           break;
         case DioErrorType.DEFAULT:
           errorDescription =
-              "Connection to API server failed due to internet connection";
+              'Connection to API server failed due to internet connection';
           break;
         case DioErrorType.RECEIVE_TIMEOUT:
-          errorDescription = "Receive timeout in connection with API server";
+          errorDescription = 'Receive timeout in connection with API server';
           break;
         case DioErrorType.RESPONSE:
           errorDescription =
-              "Received invalid status code: ${dioError.response.statusCode}";
+              'Received invalid status code: ${dioError.response.statusCode}';
           break;
         case DioErrorType.SEND_TIMEOUT:
-          errorDescription = "Send timeout in connection with API server";
+          errorDescription = 'Send timeout in connection with API server';
           break;
       }
     } else {
-      errorDescription = "Unexpected error occured";
+      errorDescription = 'Unexpected error occured';
     }
     return errorDescription;
   }
 
   String parseData(String createdAt) {
-    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(createdAt);
-    var inputDate = DateTime.parse(parseDate.toString());
-    var outputFormat = DateFormat('HH:mm:ss MM/dd/yyyy');
+    final DateTime parseDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(createdAt);
+    final DateTime inputDate = DateTime.parse(parseDate.toString());
+    final DateFormat outputFormat = DateFormat('HH:mm:ss MM/dd/yyyy');
     return outputFormat.format(inputDate);
   }
 }

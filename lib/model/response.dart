@@ -7,12 +7,12 @@ import 'package:json_annotation/json_annotation.dart';
 //
 // @JsonSerializable(createToJson: false)
 class BaseResponseBody<T> {
+  BaseResponseBody({this.info, this.results});
+
   @JsonKey(fromJson: _dataFromJson)
   final T results;
 
   final Info info;
-
-  BaseResponseBody({this.info, this.results});
 
   static T _dataFromJson<T>(Object js) {
     if (js is Map<String, dynamic>) {
@@ -28,8 +28,9 @@ class BaseResponseBody<T> {
         return Info.fromJson(js) as T;
       }
     } else if (js is List) {
-      return js.map((e) => User.fromJson(e as Map<String, dynamic>)).toList()
-          as T;
+      return js
+          .map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
+          .toList() as T;
     }
     throw ArgumentError.value(
       js,

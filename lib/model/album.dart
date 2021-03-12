@@ -4,14 +4,14 @@ part 'g/album.g.dart';
 
 @JsonSerializable()
 class Album {
+  Album({this.userId, this.id, this.title, this.email});
+
+  factory Album.fromJson(Map<String, dynamic> js) => _$AlbumFromJson(js);
+
   final int userId;
   final int id;
   final String title;
   final String email;
-
-  Album({this.userId, this.id, this.title, this.email});
-
-  factory Album.fromJson(Map<String, dynamic> js) => _$AlbumFromJson(js);
 
   Map<String, dynamic> toJson() => _$AlbumToJson(this);
 }

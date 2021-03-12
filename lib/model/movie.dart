@@ -3,10 +3,23 @@ part 'movie.g.dart';
 
 @JsonSerializable(createToJson: false)
 class Movie {
+
+  Movie(
+      {this.id,
+        this.voteAverage,
+        this.title,
+        this.posterPath,
+        this.overview,
+        this.releaseDate,
+        this.genreIds});
+
+  factory Movie.fromJson(Map<String, dynamic> js) => _$MovieFromJson(js);
+
+
   int id;
 
   @JsonKey(name: 'vote_average')
-  var voteAverage;
+  int voteAverage;
 
   String title;
 
@@ -19,15 +32,5 @@ class Movie {
 
   @JsonKey(name: 'genre_ids')
   List<int> genreIds;
-
-  Movie(
-      {this.id,
-      this.voteAverage,
-      this.title,
-      this.posterPath,
-      this.overview,
-      this.releaseDate,
-      this.genreIds});
-  factory Movie.fromJson(Map<String, dynamic> js) => _$MovieFromJson(js);
 
 }

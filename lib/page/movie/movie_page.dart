@@ -22,16 +22,16 @@ class _MoviePageState extends State<MoviePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movie'),
+        title: const Text('Movie'),
       ),
       body: StreamBuilder<List<Movie>>(
           stream: _movieBloc.movies,
-          builder: (context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                   itemCount: snapshot.data.length,
-                  itemBuilder: (ctx, index) {
-                    Movie movie = snapshot.data[index];
+                  itemBuilder: (BuildContext ctx, int index) {
+                    final Movie movie = snapshot.data[index];
                     return InkWell(
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (ctx){
@@ -48,7 +48,7 @@ class _MoviePageState extends State<MoviePage> {
                                 height: 100,
                                 width: 110,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(8.0),
                                         bottomLeft: Radius.circular(8.0)),
                                     image: DecorationImage(
@@ -63,7 +63,7 @@ class _MoviePageState extends State<MoviePage> {
                                   children: [
                                     Text(
                                       movie.title,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.black, fontSize: 18),
                                     ),
                                     const SizedBox(height: 4,),
@@ -83,7 +83,7 @@ class _MoviePageState extends State<MoviePage> {
                     );
                   });
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

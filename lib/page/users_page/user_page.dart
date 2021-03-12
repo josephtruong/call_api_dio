@@ -13,9 +13,10 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  @override
   BuildContext context;
-  int _page = 1;
-  ScrollController _scrollController = ScrollController();
+  final int _page = 1;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -28,9 +29,9 @@ class _UserPageState extends State<UserPage> {
     });
   }
 
-  getUser(BuildContext context) async {
+ Future<void> getUser(BuildContext context) async {
     Common.showLoading(context);
-    UserResponse userResponse = await userBloc.getUser();
+    final UserResponse userResponse = await userBloc.getUser();
     if (userResponse != null) {
       if (userResponse.results.isNotEmpty) {
         print('Size User ---> ${userResponse.results.length}');
@@ -48,18 +49,18 @@ class _UserPageState extends State<UserPage> {
     print('====================>');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Users'),
+        title: const Text('Users'),
         actions: [
-          IconButton(icon: Icon(Icons.search_outlined), onPressed: () {})
+          IconButton(icon: const Icon(Icons.search_outlined), onPressed: () {})
         ],
       ),
       body: Container(),
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Users'),
+        title: const Text('Users'),
         actions: [
-          IconButton(icon: Icon(Icons.search_outlined), onPressed: () {})
+          IconButton(icon: const Icon(Icons.search_outlined), onPressed: () {})
         ],
       ),
       body: RefreshIndicator(
@@ -68,7 +69,7 @@ class _UserPageState extends State<UserPage> {
         },
         child: StreamBuilder<UserResponse>(
             stream: userBloc.users,
-            builder: (context, snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<UserResponse> snapshot) {
               if (snapshot.hasData) {
                 print(snapshot.data.error);
                 if (snapshot.data.error != null &&
@@ -77,33 +78,33 @@ class _UserPageState extends State<UserPage> {
                       userBloc.getUsers(page: 1);
                   }, msgError: snapshot.data.error,);
                 } else {
-                  List<User> users = snapshot.data.results;
+                  final List<User> users = snapshot.data.results;
                   return ListView.separated(
                       controller: _scrollController,
                       itemCount: users.length + 1,
-                      separatorBuilder: (ctx, index) => Divider(),
-                      itemBuilder: (ctx, index) {
+                      separatorBuilder: (BuildContext ctx, int index) => const Divider(),
+                      itemBuilder: (BuildContext ctx, int index) {
                         if (index == 0) {
                           return Container(
-                            child: TextField(
+                            child: const TextField(
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(left: 12),
                                   hintText: 'Search'),
                             ),
                           );
                         }
-                        User user = users[index - 1];
+                        final User user = users[index - 1];
                         return ListTile(
                           onTap: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (ctx) {
+                                MaterialPageRoute(builder: (BuildContext ctx) {
                               return UserDetailPage(
                                 user: user,
                               );
                             }));
                           },
                           title: Text(user.name.title +
-                              ": " +
+                              ': ' +
                               user.name.first +
                               user.name.last),
                           subtitle: Text(user.email),
@@ -112,7 +113,7 @@ class _UserPageState extends State<UserPage> {
                       });
                 }
               }
-              return Center(child: CircularProgressIndicator());
+              return const Center(child:  CircularProgressIndicator());
             }),
       ),
     );

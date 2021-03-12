@@ -3,6 +3,29 @@ part 'movie_detail.g.dart';
 
 @JsonSerializable(createToJson: false)
 class MovieDetail {
+
+  MovieDetail(
+      {this.id,
+        this.title,
+        this.adult,
+        this.backdropPath,
+        this.budget,
+        this.genres,
+        this.homepage,
+        this.originalTitle,
+        this.overview,
+        this.posterPath,
+        this.status,
+        this.voteCount,
+        this.voteAverage,
+        this.companies,
+        this.error
+      });
+
+  factory MovieDetail.fromJson(Map<String, dynamic> js) => _$MovieDetailFromJson(js);
+
+  MovieDetail.withError(String error): this.error = error;
+
   @JsonKey(name: 'id')
   int id;
 
@@ -47,31 +70,16 @@ class MovieDetail {
 
   String error;
 
-  MovieDetail(
-      {this.id,
-      this.title,
-      this.adult,
-      this.backdropPath,
-      this.budget,
-      this.genres,
-      this.homepage,
-      this.originalTitle,
-      this.overview,
-      this.posterPath,
-      this.status,
-      this.voteCount,
-      this.voteAverage,
-      this.companies,
-      this.error
-      });
-
-  factory MovieDetail.fromJson(Map<String, dynamic> js) => _$MovieDetailFromJson(js);
-
-  MovieDetail.withError(String error): this.error = error;
 }
 
 @JsonSerializable(createToJson: false)
 class ProductionCompany {
+
+  ProductionCompany({this.id, this.logoPath, this.name, this.originCountry});
+
+  factory ProductionCompany.fromJson(Map<String, dynamic> js) =>
+      _$ProductionCompanyFromJson(js);
+
   @JsonKey(name: 'id')
   int id;
 
@@ -84,18 +92,16 @@ class ProductionCompany {
   @JsonKey(name: 'origin_country')
   String originCountry;
 
-  ProductionCompany({this.id, this.logoPath, this.name, this.originCountry});
-
-  factory ProductionCompany.fromJson(Map<String, dynamic> js) =>
-      _$ProductionCompanyFromJson(js);
 }
 
 @JsonSerializable(createToJson: false)
 class Genres {
-  int id;
-  String name;
 
   Genres({this.id, this.name});
 
   factory Genres.fromJson(Map<String, dynamic> js) => _$GenresFromJson(js);
+
+  int id;
+  String name;
+
 }

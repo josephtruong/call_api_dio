@@ -5,9 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class AlbumsPage extends StatefulWidget {
- final TYPE  type;
-
   const AlbumsPage({Key key, this.type}) : super(key: key);
+
+  final TYPE type;
+
   @override
   _AlbumsPageState createState() => _AlbumsPageState();
 }
@@ -17,10 +18,10 @@ class _AlbumsPageState extends State<AlbumsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Albums'),
+        title: const Text('Albums'),
         actions: [
           IconButton(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: () {
                 createAlbum();
               })
@@ -33,13 +34,14 @@ class _AlbumsPageState extends State<AlbumsPage> {
   FutureBuilder<List<Album>> _buildFutureBuilder() {
     return FutureBuilder<List<Album>>(
         future: fetchAlbum(),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Album>> snapshot) {
           if (snapshot.hasData) {
             return ListView.separated(
-                separatorBuilder: (ctx, index) => Divider(),
+                separatorBuilder: (BuildContext ctx, int index) =>
+                    const Divider(),
                 itemCount: snapshot.data.length,
-                itemBuilder: (ctx, index) {
-                  Album album = snapshot.data[index];
+                itemBuilder: (BuildContext ctx, int index) {
+                  final Album album = snapshot.data[index];
                   return ListTile(
                     title: Text('${album.id}'),
                     subtitle: Text(album.title),
@@ -51,14 +53,14 @@ class _AlbumsPageState extends State<AlbumsPage> {
               color: Colors.red,
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }
 
   Future<List<Album>> fetchAlbum() async {
-    Dio dio = new Dio();
-    final response =
+    final Dio dio = Dio();
+    final Response<List<Album>> response =
         await dio.get('https://jsonplaceholder.typicode.com/albums');
     if (response.statusCode == 200) {
       return Albums.fromJson(response.data).list;
@@ -67,14 +69,17 @@ class _AlbumsPageState extends State<AlbumsPage> {
     }
   }
 
-
-  createAlbum() async {
-    Map<String, dynamic> body = {'title': 'Flutter dev'};
-    Options options = Options(headers: <String, String>{
+  Future<void> createAlbum() async {
+    //ToDo
+    final Map<String, String> body = {
+      'title': 'Flutter dev',
+      'body': 1.toString()
+    };
+    final Options options = Options(headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    Dio dio = new Dio();
-    final res = await dio.postUri(
+    final Dio dio = Dio();
+    final Response<Album> res = await dio.postUri(
         Uri.https('jsonplaceholder.typicode.com', 'albums'),
         data: body,
         options: options);
