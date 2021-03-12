@@ -13,25 +13,23 @@ class TaskBloc {
       contentType: 'application/json',
     );
 
-    final BehaviorSubject<ListTask> _tasks = BehaviorSubject<ListTask>();
-    final BehaviorSubject<Task> _task = BehaviorSubject<Task>();
-
-    Stream<ListTask> get tasks => _tasks?.stream;
-
-    Stream<Task> get task => _task?.stream;
-
-
-    RestClient restClient;
-
-
     // dio.interceptors.add(LoggingInterceptor());
     restClient = RestClient(dio);
     _getTask();
     // _getAll();
   }
 
-  Future<void> _getAll() async {
-    await Future.wait([_getTask(), getDetailTask(id: '9')]);
+  final BehaviorSubject<ListTask> _tasks = BehaviorSubject<ListTask>();
+  final BehaviorSubject<Task> _task = BehaviorSubject<Task>();
+
+  Stream<ListTask> get tasks => _tasks?.stream;
+
+  Stream<Task> get task => _task?.stream;
+
+  RestClient restClient;
+
+  Future<dynamic> _getAll() async {
+    await Future.wait<dynamic>([_getTask(), getDetailTask(id: '9')]);
   }
 
   Future<List<Task>> _getTask() async {
@@ -47,8 +45,8 @@ class TaskBloc {
     try {
       _task?.sink?.add(null);
       final Task result = await restClient.getTaskById(id);
-      final DateTime parseDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-          .parse(result.createdAt);
+      final DateTime parseDate =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(result.createdAt);
       final DateTime inputDate = DateTime.parse(parseDate.toString());
       final DateFormat outputFormat = DateFormat('hh:mm a MM/dd/yyyy');
       final String outputDate = outputFormat.format(inputDate);

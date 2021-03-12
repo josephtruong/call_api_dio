@@ -62,7 +62,7 @@ class _TaskPageState extends State<TaskPage> {
                     subtitle:
                         Text(task.createdAt != null ? parseData(task.createdAt) : ''),
                     onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                        Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext ctx) {
                           return TaskDetailPage(taskBloc: _taskBloc, id: task.id,);
                         }));
                     },
@@ -98,7 +98,7 @@ class _TaskPageState extends State<TaskPage> {
     //                     restClient
     //                         .getTaskById(task.id)
     //                         .then((value) => Navigator.push(context,
-    //                                 MaterialPageRoute(builder: (ctx) {
+    //                                 MaterialPageRoute<void>(builder: (ctx) {
     //                               return TaskDetailPage(
     //                                 task: value,
     //                               );

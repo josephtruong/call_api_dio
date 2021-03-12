@@ -97,7 +97,7 @@ class _UserPageState extends State<UserPage> {
                         return ListTile(
                           onTap: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (BuildContext ctx) {
+                                MaterialPageRoute<void>(builder: (BuildContext ctx) {
                               return UserDetailPage(
                                 user: user,
                               );

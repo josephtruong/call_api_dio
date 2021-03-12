@@ -34,7 +34,7 @@ class _MoviePageState extends State<MoviePage> {
                     final Movie movie = snapshot.data[index];
                     return InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                        Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext ctx){
                           return MovieDetailPage(id: movie.id.toString(),);
                         }));
                       },

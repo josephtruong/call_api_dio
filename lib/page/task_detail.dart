@@ -23,12 +23,12 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: const Text(''),
       ),
       body: StreamBuilder<Task>(
         stream: widget.taskBloc.task,
-        builder: (ctx, snap) {
-          Task task = snap.data;
+        builder: (BuildContext ctx, AsyncSnapshot<Task> snap) {
+          final Task task = snap.data;
           if (snap.hasData) {
             if (snap.data.error != null) {
               return Center(
@@ -40,7 +40,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget> [
                 //   Container(
                 //     width: 100,
                 //     height: 100,
@@ -58,7 +58,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               ),
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

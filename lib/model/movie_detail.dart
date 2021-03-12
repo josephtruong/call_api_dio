@@ -22,9 +22,12 @@ class MovieDetail {
         this.error
       });
 
+  MovieDetail.withError(String valError) {
+    this.error = valError;
+  }
+
   factory MovieDetail.fromJson(Map<String, dynamic> js) => _$MovieDetailFromJson(js);
 
-  MovieDetail.withError(String error): this.error = error;
 
   @JsonKey(name: 'id')
   int id;

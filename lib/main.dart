@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext ctx) {
                     return const AlbumsPage(
                       type: TYPE.FEATURE,
                     );
@@ -58,21 +58,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text('Call Api Feature')),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext ctx) {
                     return UserPage();
                   }));
                 },
                 child: const Text('Call Api Stream')),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext ctx) {
                     return TaskPage();
                   }));
                 },
                 child: const Text('Call Api Retrofit')),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext ctx) {
                     return MoviePage();
                   }));
                 },

@@ -2,28 +2,28 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class ErrorPage extends StatelessWidget {
-  final Function onTap;
-  final String msgError;
-  final _isLoading = ValueNotifier(false);
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
 
   ErrorPage({Key key, this.onTap, this.msgError}) : super(key: key);
+
+  final Function onTap;
+  final String msgError;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.all(20.0),
+      margin: const EdgeInsets.all(20.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget> [
           ..._buildProgress(),
           Text(
-           msgError,
+            msgError,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
@@ -32,7 +32,7 @@ class ErrorPage extends StatelessWidget {
             height: 16,
           ),
           TextButton.icon(
-            icon: Icon(
+            icon: const Icon(
               Icons.warning_amber_outlined,
               color: Colors.red,
             ),
@@ -42,7 +42,7 @@ class ErrorPage extends StatelessWidget {
                 onTap();
               });
             },
-            label: Text(
+            label: const Text(
               'Try again',
               style: TextStyle(
                   color: Colors.black,
@@ -55,14 +55,16 @@ class ErrorPage extends StatelessWidget {
     );
   }
 
-  _buildProgress() {
-    return [
-      ValueListenableBuilder(valueListenable: _isLoading, builder: (ctx, value, child){
-        if (value) {
-          return CircularProgressIndicator();
-        }
-        return Container();
-      }),
+   _buildProgress() {
+    return <Widget>[
+      ValueListenableBuilder(
+          valueListenable: _isLoading,
+          builder: (ctx, value, child) {
+            if (value) {
+              return CircularProgressIndicator();
+            }
+            return Container();
+          }),
       SizedBox(
         height: 48,
       )
@@ -71,13 +73,13 @@ class ErrorPage extends StatelessWidget {
 }
 
 class Debouncer {
+  Debouncer({this.milliseconds});
+
   final int milliseconds;
   VoidCallback action;
   Timer _timer;
 
-  Debouncer({this.milliseconds});
-
-  run(VoidCallback action) {
+  void run(VoidCallback action) {
     if (_timer != null) {
       _timer.cancel();
     }
