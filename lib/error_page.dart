@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
-  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
-
   ErrorPage({Key key, this.onTap, this.msgError}) : super(key: key);
+
+  final ValueNotifier<bool> _isLoading = ValueNotifier<bool>(false);
 
   final Function onTap;
   final String msgError;
@@ -18,7 +18,7 @@ class ErrorPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget> [
+        children: <Widget>[
           ..._buildProgress(),
           Text(
             msgError,
@@ -55,17 +55,17 @@ class ErrorPage extends StatelessWidget {
     );
   }
 
-   _buildProgress() {
+  List<Widget> _buildProgress() {
     return <Widget>[
-      ValueListenableBuilder(
+      ValueListenableBuilder<bool>(
           valueListenable: _isLoading,
-          builder: (ctx, value, child) {
+          builder: (BuildContext ctx, bool value, Widget child) {
             if (value) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
             return Container();
           }),
-      SizedBox(
+      const SizedBox(
         height: 48,
       )
     ];

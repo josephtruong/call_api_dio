@@ -18,13 +18,16 @@ class _RestClient implements RestClient {
 
   @override
   Future<List<Task>> getTask() async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<List<dynamic>>('/tasks',
+    const Map<String, dynamic> _extra = <String, dynamic>{};
+    final Map<String, dynamic> queryParameters = <String, dynamic>{};
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    final Response<List<dynamic>> _result = await _dio.request<List<dynamic>>('/tasks',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{}, baseUrl: baseUrl),
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     var value = _result.data
         .map((dynamic i) => Task.fromJson(i as Map<String, dynamic>))
@@ -119,7 +122,7 @@ class _RestClient implements RestClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Task.fromJson(_result.data);
+    final Task value = Task.fromJson(_result.data);
     return value;
   }
 

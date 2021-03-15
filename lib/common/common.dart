@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:call_api_dio/main.dart';
 
 class Common {
-  static showLoading(BuildContext context) {
-    showDialog(
+  static Future<void> showLoading(BuildContext context) async {
+    showDialog<void>(
         context: context,
-        builder: (ctx) {
-          return Center(
+        builder: (BuildContext cxt) {
+          return const Center(
             child: CircularProgressIndicator(),
           );
         });
   }
 
-  static hideLoading(BuildContext context) {
+  static Future<void> hideLoading(BuildContext context) async {
     Navigator.pop(context);
   }
 
-  static showMessage({String message}) {
-    showDialog(
+  static Future<void> showMessage({String message}) async {
+    showDialog<void>(
         context: navigatorKey.currentState.overlay.context,
-        builder: (ctx) {
+        builder: (BuildContext context) {
           return ShowError(message: message);
         });
   }

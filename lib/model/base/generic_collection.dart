@@ -5,6 +5,11 @@ part 'generic_collection.g.dart';
 
 @JsonSerializable()
 class GenericCollection<T> {
+
+  GenericCollection({this.page, this.totalResults, this.totalPages, this.results});
+
+  factory GenericCollection.fromJson(Map<String, dynamic> js) => _$GenericCollectionFromJson<T>(js);
+
   @JsonKey(name: 'page')
   final int page;
 
@@ -17,12 +22,6 @@ class GenericCollection<T> {
   @JsonKey(name: 'results')
   @_Converter()
   final List<T> results;
-
-  GenericCollection(
-      {this.page, this.totalResults, this.totalPages, this.results});
-
-  factory GenericCollection.fromJson(Map<String, dynamic> js) =>
-      _$GenericCollectionFromJson<T>(js);
 }
 
 class _Converter<T> implements JsonConverter<T, Object> {
@@ -30,9 +29,7 @@ class _Converter<T> implements JsonConverter<T, Object> {
 
   @override
   T fromJson(Object json) {
-    if (json is Map<String, dynamic> &&
-        json.containsKey('adult') &&
-        json.containsKey('genre_ids')) {
+    if (json is Map<String, dynamic>) {
       return Movie.fromJson(json) as T;
     }
     return json as T;

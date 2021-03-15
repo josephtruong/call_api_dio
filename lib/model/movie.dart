@@ -18,7 +18,7 @@ class Movie {
   int id;
 
   @JsonKey(name: 'vote_average')
-  int voteAverage;
+  double voteAverage;
 
   String title;
 

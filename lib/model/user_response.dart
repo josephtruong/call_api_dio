@@ -5,13 +5,10 @@ class UserResponse {
 
   UserResponse(this.results, this.info, this.error);
 
-  factory UserResponse.fromJson(Map<String, dynamic> js) {
-    final Info info = Info.fromJson(js['info']);
-    return UserResponse(
-        (js['results'] as List).map((i) => User.fromJson(i)).toList(),
-        info,
-        '');
-  }
+  // factory UserResponse.fromJson(Map<String, dynamic> js) {
+  //   final Info info = Info.fromJson(js['info']);
+  //   return UserResponse((js['results'] as List).map((i) => User.fromJson(i)).toList(), info, '');
+  // }
 
   UserResponse.withError(String errorValue)
       : results = <User>[],
